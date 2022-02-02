@@ -1,35 +1,49 @@
 <template>
   <div class="container">
-    <input type="text">
-    <button type="button">Cerca</button>
+    <Input @cerca="filtra"/>
   </div>
 </template>
 
 <script>
 import axios from "axios"
+import Input from "./commons/Input.vue"
+
 
 export default {
   name: 'Main',
-  props: {
-    
+  components:{
+    Input
   },
   data() {
       return {
-          
+          apiURL:"https://api.themoviedb.org/3/search/movie",
+          arrayFilm:[],
+          inputText:""
       }
   },
   created(){
-      this.getBrani();
+      
   },
   methods: {
-      cercaFilm: function(){
+      getFilm: function(){
         axios
-          .get('https://developers.themoviedb.org/3/search/movies', {
+          .get(this.apiURL, {
             params: {
               api_key: '52964418bdf199e6c4cf74a2f4a59238',
-              query: '',
+              query: this.inputText,
             }
           })
+          .then((risposta) => {
+            this.arrayFilm = risposta.data.results;
+            console.log(this.arrayFilm)
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
+      },
+      filtra(value){
+        this.inputText = value 
+        this.getFilm()
       }
   }
 }

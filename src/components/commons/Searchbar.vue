@@ -1,6 +1,6 @@
 <template>
 <div>
-    <input type="text" v-model="valoreText">
+    <input type="text" v-model.trim="valoreText">
     <button type="button"
     @click.prevent="$emit('cerca',valoreText)">Cerca</button>
 </div>
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    name: "Input",
+    name: "Searchbar",
     data(){
         return{
             valoreText:""

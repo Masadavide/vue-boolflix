@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="searchbar">
     <input type="text" v-model.trim="valoreText">
     <button type="button"
     @click.prevent="$emit('cerca',valoreText)">Cerca</button>
@@ -18,5 +18,7 @@ export default {
 </script>
 
 <style>
-
+.searchbar{
+    text-align: right;
+}
 </style>

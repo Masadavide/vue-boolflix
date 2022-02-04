@@ -1,7 +1,10 @@
 <template>
-    <div class="container">
-        <Searchbar @cerca="passaggioDatiSH"/>
-    </div>
+    <header>
+        <div class="container">
+            Boolflix
+            <Searchbar @cerca="passaggioDatiSH"/>
+        </div>
+    </header>
 </template>
 
 <script>
@@ -18,6 +21,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="scss">
+header{
+    background-color: black;
+    color: red;
 
+    .container{
+        max-width: 1200px;
+        height: 100px;
+    }
+}
 </style>

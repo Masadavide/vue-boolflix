@@ -4,8 +4,14 @@
             <li class="poster"><img :src="getPoster()" alt=""></li>
             <li>Titolo:{{film.title}}</li>
             <li>Titolo originale:{{film.original_title}}</li>
-            <li class="flag">Lingua:<img :src="getBandiera(this.film.original_language)" alt=""> </li>
-            <li class="stella">Voto:{{getStar()}}</li>
+            <li class="flag">Lingua:
+                <img :src="getBandiera(this.film.original_language)" alt=""> 
+            </li>
+            <li>Voto:
+                <div class="stella" v-for="element in getStar()" :key="element.id">
+                    <i class="fas fa-star"></i>
+                </div>
+            </li>
         </ul>
     </div>
 </template>
@@ -15,11 +21,6 @@ export default {
     name: "Film",
     props:{
         film: Object
-    },
-    data(){
-        return{
-            stelle: ""
-        }
     },
     methods:{
         getBandiera(language) {
@@ -39,7 +40,14 @@ export default {
             }
         },
         getStar(){
-            return  (this.film.vote_average / 2).toFixed(0)
+            const stelleArray = [];
+            const stelle = (this.film.vote_average / 2)
+            for (let i = 0; i < stelle; i++) {
+                stelleArray.push(1);
+                console.log(stelle +"stelle")
+            }
+            return  stelleArray
+            
         }
     }
 }
@@ -53,10 +61,12 @@ export default {
 .flag{
     width: 10px;
     height: 15px;
+    display: inline-block;
 }
 img{
     width: 100%;
     height: 100%;
+    display: inline-block;
 }
 .stella{
     width: 30px;

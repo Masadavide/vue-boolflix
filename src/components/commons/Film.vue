@@ -4,8 +4,8 @@
             <li class="poster"><img :src="getPoster()" alt=""></li>
             <li>Titolo:{{film.title}}</li>
             <li>Titolo originale:{{film.original_title}}</li>
-            <li class="flag">Lingua:<img :src="getBandiera()" alt=""> </li>
-            <li>Voto:{{getStar()}}</li>
+            <li class="flag">Lingua:<img :src="getBandiera(this.film.original_language)" alt=""> </li>
+            <li class="stella">Voto:{{getStar()}}</li>
         </ul>
     </div>
 </template>
@@ -16,11 +16,16 @@ export default {
     props:{
         film: Object
     },
+    data(){
+        return{
+            stelle: ""
+        }
+    },
     methods:{
-        getBandiera() {
-            if(this.film.original_language == "it"){
+        getBandiera(language) {
+            if(language == "it"){
                 return require("../../assets/img/italy.png")
-            }else if(this.film.original_language == "en"){
+            }else if(language == "en"){
                 return require("../../assets/img/united-kingdom.png")
             }else{
                 return require("../../assets/img/planet-earth.png")
@@ -34,7 +39,7 @@ export default {
             }
         },
         getStar(){
-            return (this.film.vote_average / 2).toFixed(0)
+            return  (this.film.vote_average / 2).toFixed(0)
         }
     }
 }
@@ -52,5 +57,9 @@ export default {
 img{
     width: 100%;
     height: 100%;
+}
+.stella{
+    width: 30px;
+    height: 30px;
 }
 </style>

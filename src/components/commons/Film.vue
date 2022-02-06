@@ -1,24 +1,46 @@
 <template>
-    <div>
-        <ul>
-            <li class="poster"><img :src="getPoster()" alt=""></li>
-            <li>Titolo:{{film.title}}</li>
-            <li>Titolo originale:{{film.original_title}}</li>
-            <li class="flag">Lingua:
-                <img :src="getBandiera(this.film.original_language)" alt=""> 
-            </li>
-            <li>Voto:
-                <div class="stella" v-for="element in getStar()" :key="element.id">
-                    <i class="fas fa-star"></i>
+    <div class="container">
+        <div class="poster" @mouseover="show = true"   @mouseleave="show = false">
+            <img :src="getPoster()" alt="" v-if="!show">
+            <ul v-if="show">
+                <div class="text">
+                    <li>Titolo:
+                        <span class="lowercase">
+                        {{film.title}}
+                        </span>
+                    </li>
+                    <li>Titolo originale:
+                        <span class="lowercase">
+                            {{film.original_title}}
+                        </span> 
+                    </li>
+                    <li class="flag">Lingua:
+                        <img :src="getBandiera(this.film.original_language)" alt=""> 
+                    </li>
+                    <li>Voto:
+                        <div class="stella" v-for="element in getStar()" :key="element.id">
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>Panoramica:
+                        <span class="lowercase">
+                            {{film.overview}}
+                        </span>
+                    </li>
                 </div>
-            </li>
-        </ul>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     name: "Film",
+    data(){
+        return{
+            show: false
+        };
+    },
     props:{
         film: Object
     },
@@ -44,32 +66,64 @@ export default {
             const stelle = (this.film.vote_average / 2)
             for (let i = 0; i < stelle; i++) {
                 stelleArray.push(1);
-                console.log(stelle +"stelle")
             }
             return  stelleArray
-            
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
-.poster{
-    width: 200px;
-    height: 300px;
+.container{
+    .poster::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .poster{
+        width: 200px;
+        height: 300px;
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+        margin: 20px 0;
+        overflow-y: scroll;
+
+        .text{
+            padding: 10px;
+        }
+
+        li{
+            font-weight: bold;
+            font-size: 20px;
+
+            .lowercase{
+                font-weight: lighter;
+                font-size: 15px;
+            }
+        }
+    
+        .flag{
+            display: inline-block;
+
+            img{
+                width: 10px;
+                height: 15px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+        .stella{
+            width: 30px;
+            height: 30px;
+            display: inline;
+            color: gold;
+        }
+    
+    }
 }
-.flag{
-    width: 10px;
-    height: 15px;
-    display: inline-block;
-}
-img{
-    width: 100%;
-    height: 100%;
-    display: inline-block;
-}
-.stella{
-    width: 30px;
-    height: 30px;
-}
+
 </style>

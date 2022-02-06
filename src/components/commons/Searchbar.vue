@@ -19,6 +19,7 @@ export default {
 
 <style>
 .searchbar{
-    text-align: right;
+    float: right;
+    line-height: 150px;
 }
 </style>

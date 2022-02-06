@@ -1,26 +1,54 @@
 <template>
-    <div>
-        <ul>
-            <li class="poster"><img :src="getPoster()" alt=""></li>
-            <li>Titolo:{{serie.name}}</li>
-            <li>Titolo originale:{{serie.original_name}}</li>
-            <li class="flag">Lingua:<img :src="bandiera()" alt=""> </li>
-            <li>Voto:{{serie.vote_average}}</li>
-        </ul>
+    <div class="container">
+        <div class="poster" @mouseover="show = true"   @mouseleave="show = false">
+            <img :src="getPoster()" alt="" v-if="!show">
+            <ul v-if="show">
+                <div class="text">
+                    <li>Titolo:
+                        <span class="lowercase">
+                        {{serie.name}}
+                        </span>
+                    </li>
+                    <li>Titolo originale:
+                        <span class="lowercase">
+                            {{serie.original_name}}
+                        </span> 
+                    </li>
+                    <li class="flag">Lingua:
+                        <img :src="getBandiera(this.serie.original_language)" alt=""> 
+                    </li>
+                    <li>Voto:
+                        <div class="stella" v-for="element in getStar()" :key="element.id">
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </li>
+                    <li>Panoramica:
+                        <span class="lowercase">
+                            {{serie.overview}}
+                        </span>
+                    </li>
+                </div>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     name: "Serie",
+    data(){
+        return{
+            show: false
+        };
+    },
     props:{
         serie: Object
     },
     methods:{
-        bandiera() {
-            if(this.serie.original_language == "it"){
+        getBandiera(language) {
+            if(language == "it"){
                 return require("../../assets/img/italy.png")
-            }else if(this.serie.original_language == "en"){
+            }else if(language == "en"){
                 return require("../../assets/img/united-kingdom.png")
             }else{
                 return require("../../assets/img/planet-earth.png")
@@ -32,22 +60,69 @@ export default {
             }else{
                 return "https://www.goodworking.it/wp-content/uploads/2018/03/pagina-errore-404.jpg"
             }
+        },
+        getStar(){
+            const stelleArray = [];
+            const stelle = (this.serie.vote_average / 2)
+            for (let i = 0; i < stelle; i++) {
+                stelleArray.push(1);
+            }
+            return  stelleArray
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
-.poster{
-    width: 200px;
-    height: 300px;
-}
-.flag{
-    width: 10px;
-    height: 15px;
-}
-img{
-    width: 100%;
-    height: 100%;
+.container{
+    .poster::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .poster{
+        width: 200px;
+        height: 300px;
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+        margin: 20px 0;
+        overflow-y: scroll;
+
+        .text{
+            padding: 10px;
+        }
+
+        li{
+            font-weight: bold;
+            font-size: 20px;
+
+            .lowercase{
+                font-weight: lighter;
+                font-size: 15px;
+            }
+        }
+    
+        .flag{
+            display: inline-block;
+
+            img{
+                width: 10px;
+                height: 15px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+        .stella{
+            width: 30px;
+            height: 30px;
+            display: inline;
+            color: gold;
+        }
+    
+    }
 }
 </style>

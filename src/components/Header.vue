@@ -1,7 +1,9 @@
 <template>
     <header>
         <div class="container">
-            Boolflix
+            <div class="title">
+                Boolflix
+            </div>
             <Searchbar @cerca="passaggioDatiSH"/>
         </div>
     </header>
@@ -27,8 +29,14 @@ header{
     color: red;
 
     .container{
-        max-width: 1200px;
-        height: 100px;
+        height: 150px;
+        
+        .title{
+            font-size: 40px;
+            line-height: 150px;
+            text-transform: uppercase;
+            display: inline-block;
+        }
     }
 }
 </style>

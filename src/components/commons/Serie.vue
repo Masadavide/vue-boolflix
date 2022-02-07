@@ -18,9 +18,12 @@
                         <img :src="getBandiera(this.serie.original_language)" alt=""> 
                     </li>
                     <li>Voto:
-                        <div class="stella" v-for="element in getStar()" :key="element.id">
+                        <span class="stella" v-for="element in getStar(vote)" :key="element.id">
                             <i class="fas fa-star"></i>
-                        </div>
+                        </span>
+                        <span class="stella" v-for="element2 in (5-getStar(vote))" :key="element2.id">
+                            <i class="far fa-star"></i>
+                        </span>
                     </li>
                     <li>Panoramica:
                         <span class="lowercase">
@@ -38,7 +41,8 @@ export default {
     name: "Serie",
     data(){
         return{
-            show: false
+            show: false,
+            vote: ""
         };
     },
     props:{
@@ -51,7 +55,7 @@ export default {
             }else if(language == "en"){
                 return require("../../assets/img/united-kingdom.png")
             }else{
-                return require("../../assets/img/planet-earth.png")
+                return require("../../assets/img/international.png")
             }
         },
         getPoster(){
@@ -62,12 +66,8 @@ export default {
             }
         },
         getStar(){
-            const stelleArray = [];
-            const stelle = (this.serie.vote_average / 2)
-            for (let i = 0; i < stelle; i++) {
-                stelleArray.push(1);
-            }
-            return  stelleArray
+            this.vote = Math.ceil(this.serie.vote_average / 2)
+            return this.vote
         }
     }
 }
